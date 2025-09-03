@@ -53,7 +53,7 @@ ex: alb-502team-dev-web-an2-1a
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
 | vpc                | VPC-FOT-[ENV]-[SERVICE]-[REGION] | 
-| subnet             | PUBLIC-SUBNET-FOT-[ENV]-[SERVICE-NAME]-[REGION]-1A [br] PRIVATE-SUBNET-FOT-[ENV]-[SERVICE-NAME]-[REGION]-2B |
+| subnet             | PUBLIC-SUBNET-FOT-[ENV]-[SERVICE-NAME]-[REGION]-[ZONE] |
 | route table        | RTB-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
 | internet gateway   | IGW-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
 | nat gateways       | NGW-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
