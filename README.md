@@ -51,33 +51,44 @@ ex: alb-502team-dev-web-an2-1a
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
-| vpc                | VPC-FOT-DEV-AN2
-| subnet             | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A/2B <br> PRIVATE-SUBNET-FOT-DEV-WEB-AN2-1A/2B <br> PRIVATE-SUBNET-FOT-DEV-WAS-AN2-1A/2B <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A/2B |
-| route table        | ROUTE-TABLE-FOT-DEV-WEB-AN2
-| internet gateway   | IGW-FOT-DEV-ELB-AN2
-| nat gateways       | NGW-FOT-DEV-PUBLIC-AN2
-| elastic IPs        | EIP-FOT-DEV-WEB-AN2
-| security groups    | SG-FOT-DEV-WEB-AN2
-| **--------------** | **--------------** |
-| ec2                | EC2-FOT-DEV-WEB-AN2-1A/2B
-| ami                | yyyymmdd-AMI-<EC2-NAME>
-| ebs volumes        | EBS
-| snapshots          | SNAP
-| key-pairs          | KEY-
-| load balancers     | ALB/NLB-FOT-DEV-WEB-AN2-1A/2B
-| **--------------** | **--------------** |
-| ecr                | ECR-FOT-DEV-WEB-AN2
-| eks                | EKS-FOT-DEV-CLUSTER01-AN2
-| s3                 | S3-FOT-DEV-?-AN2
-| rds                | RDS-FOT-DEV-MODULE-AN2
+| vpc                | VPC-FOT-DEV-<SERVICE>-AN2 | 
+| subnet             | PUBLIC-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-2B |
+| route table        | ROUTE-TABLE-FOT-DEV-<SERVICE-NAME>-AN2 |
+| internet gateway   | IGW-FOT-DEV-ELB-AN2 |
+| nat gateways       | NGW-FOT-DEV-PUBLIC-AN2 |
+| elastic IPs        | EIP-FOT-DEV-<SERVICE-NAME>-AN2 | 
+| security groups    | SG-FOT-DEV-<SERVICE-NAME>-AN2 | 
+| ec2                | EC2-FOT-DEV-<SERVICE-NAME>-AN2-1A/2B |
+| ami                | yyyymmdd-AMI-<EC2-NAME> |
+| ebs volumes        | EBS-<EC2-NAME> |
+| snapshots          | SNAP-<EC2-NAME> | 
+| key-pairs          | KEY-<EC2-SERVICE-NAME> |
+| load balancers     | ALB/NLB-FOT-DEV-<SERVICE-NAME>-AN2-1A/2B |
+| ecr                | ECR-FOT-DEV-<SERVICE-NAME>-AN2 |
+| eks                | EKS-FOT-DEV-<CLUSTER-NAME>-AN2 |
+| s3                 | S3-FOT-DEV-??-AN2 |
+| rds                | RDS-FOT-DEV-<SERVICE-NAME>-AN2 |
 
 ### NETWORK CIDR
+1. Application Service  
 | RESOURCE | RESOURCE NAME | CIDR |
 | -------- | ------------- | ---- |
-| VPC             | VPC-FOT-DEV-AN2 | 10.0.0.0/20 |
+| VPC             | VPC-FOT-DEV-EKS-AN2 |
+| PUBLIC-SUBNET   | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-EKS-AN2-2B | 10.0.1.0/24 <br> 10.0.2.0/24 |
 | PUBLIC-SUBNET   | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B | 10.0.1.0/24 <br> 10.0.2.0/24 |
-| PRIVATE-SUBNET  | PRIVATE-SUBNET-FOT-DEV-WAS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-WAS-AN2-2B | 10.0.10.0/24 <br> 10.0.20.0/24 |
+| PRIVATE-SUBNET  | PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B | 10.0.10.0/24 <br> 10.0.20.0/24 |
 | RDS-SUBNET      | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B | 10.0.30.0/24 <br> 10.0.40.0/24 |
-                      
+
+2. RDS  
+| RESOURCE | RESOURCE NAME | CIDR |
+| -------- | ------------- | ---- |
+| VPC             | VPC-FOT-DEV-RDS-AN2 |
+| PRIVATE-SUBNET  | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B | 10.x.x.x/26 <br> 10.x.x.x/26 |
+
+3. MGMT  
+| RESOURCE | RESOURCE NAME | CIDR |
+| -------- | ------------- | ---- |
+| VPC             | VPC-FOT-DEV-MGMT-AN2 |
+| PUBLIC-SUBNET   | PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-2B | 10.0.1.0/24 <br> 10.0.2.0/24 |
 
 ### ROUTE TABLES
