@@ -117,4 +117,4 @@ graph TD;
 #### 3. RDS (RTB-FOT-DEV-RDS-AN2)  
 | Route Table         | Destination | Target              |
 | ------------------- | ----------- | ------------------- |
-| RTB-FOT-DEV-ELB-AN2 | 10.x.x.x/26 | local               |
+| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               |
