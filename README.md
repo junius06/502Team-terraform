@@ -44,7 +44,7 @@ terraform apply ~
 <br>
 
 ## Naming Rules
-**[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]**  
+**[aws-serivce]-[project]-[env]-[service-name]-[regionCode]-[zone]**  
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
@@ -69,26 +69,13 @@ terraform apply ~
 
 ## NETWORK
 ### CIDR  
-#### 1. EKS (Application Service)  
-| RESOURCE      | RESOURCE NAME                                                                | CIDR                           |
-| ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
-| VPC           | VPC-FOT-DEV-EKS-AN2                                                          | 10.0.0.0/20                    |
-| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-EKS-AN2-2B       | 10.0.1.0/24 <br> 10.0.2.0/24   |
-| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B       | 10.0.1.0/24 <br> 10.0.2.0/24   |
-| PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B     | 10.0.10.0/24 <br> 10.0.20.0/24 |
-| RDS-SUBNET    | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B     | 10.0.30.0/24 <br> 10.0.40.0/24 |
-
-#### 2. RDS  
-| RESOURCE      | RESOURCE NAME                                                                | CIDR                           |
-| ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
-| VPC           | VPC-FOT-DEV-RDS-AN2                                                          |                                |
-| PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B     | 10.x.x.x/26 <br> 10.x.x.x/26   |
-
-
-### VPC Peering  
-VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-MGMT-AN2  
-VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-RDS-AN2  
-- MGMT DB-BASTION서버의 NAT IP를 RDS에 접근 가능하도록 RBS-SG Inbound에 추가한다. (VPC Peering X)  
+| RESOURCE           | RESOURCE NAME                                                            | CIDR                            |
+| ------------------ | -------------------------------------------------------------------------| ------------------------------- |
+| VPC                | VPC-FOT-DEV-EKS-AN2                                                      | 10.0.0.0/20                     |
+| MGMT-PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-2B | 10.0.0.0/26 <br> 10.0.0.64/26   |
+| ELB-PUBLIC-SUBNET  | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B   | 10.0.0.128/26 <br> 10.0.0.192/26|
+| EKS-PRIVATE-SUBNET | PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B | 10.0.10.0/25 <br> 10.0.10.128/25|
+| RDS-PRIVATE-SUBNET | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B | 10.0.20.0/26 <br> 10.0.20.64/26 |
 
 ```mermaid
 graph LR; 
