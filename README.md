@@ -72,6 +72,20 @@ ex: alb-502team-dev-web-an2-1a
 ### NETWORK CIDR  
 
 1. Application Service  
+
+| RESOURCE      | RESOURCE NAME                        | CIDR        |
+| ------------- | ------------------------------------ | ----------- |
+| VPC           | VPC-FOT-DEV-EKS-AN2                  |             |
+| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-1A     | 10.0.1.0/24 |
+|               | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-2B     | 10.0.2.0/24 |
+| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A     | 10.0.1.0/24 |
+|               | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B     | 10.0.2.0/24 |
+| PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A    | 10.0.10.0/24 |
+|               | PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B    | 10.0.20.0/24 |
+| RDS-SUBNET    | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A    | 10.0.30.0/24 |
+|               | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B    | 10.0.40.0/24 |
+
+
 | RESOURCE      | RESOURCE NAME                                                                | CIDR                           |
 | ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
 | VPC           | VPC-FOT-DEV-EKS-AN2                                                          |                                |
