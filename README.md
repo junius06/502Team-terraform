@@ -52,23 +52,23 @@ ex: alb-502team-dev-web-an2-1a
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
-| vpc                | VPC-FOT-DEV-<SERVICE>-AN2 | 
-| subnet             | PUBLIC-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-2B |
-| route table        | RTB-FOT-DEV-<SERVICE-NAME>-AN2 |
-| internet gateway   | IGW-FOT-DEV-ELB-AN2 |
-| nat gateways       | NGW-FOT-DEV-PUBLIC-AN2 |
-| elastic IPs        | EIP-FOT-DEV-<SERVICE-NAME>-AN2 | 
-| security groups    | SG-FOT-DEV-<SERVICE-NAME>-AN2 | 
-| ec2                | EC2-FOT-DEV-<SERVICE-NAME>-AN2-1A/2B |
+| vpc                | VPC-FOT-<ENV>-<SERVICE>-<REGION> | 
+| subnet             | PUBLIC-SUBNET-FOT-<ENV>-<SERVICE-NAME>-<REGION>-1A <br> PRIVATE-SUBNET-FOT-<ENV>-<SERVICE-NAME>-<REGION>-2B |
+| route table        | RTB-FOT-<ENV>-<SERVICE-NAME>-<REGION> |
+| internet gateway   | IGW-FOT-<ENV>-<SERVICE-NAME>-<REGION> |
+| nat gateways       | NGW-FOT-<ENV>-<SERVICE-NAME>-<REGION> |
+| elastic IPs        | EIP-FOT-<ENV>-<SERVICE-NAME>-<REGION> | 
+| security groups    | SG-FOT-<ENV>-<SERVICE-NAME>-<REGION> | 
+| ec2                | EC2-FOT-<ENV>-<SERVICE-NAME>-<REGION>-<ZONE> |
 | ami                | yyyymmdd-AMI-<EC2-NAME> |
 | ebs volumes        | EBS-<EC2-NAME> |
 | snapshots          | SNAP-<EC2-NAME> | 
 | key-pairs          | KEY-<EC2-SERVICE-NAME> |
-| load balancers     | ALB/NLB-FOT-DEV-<SERVICE-NAME>-AN2-1A/2B |
-| ecr                | ECR-FOT-DEV-<SERVICE-NAME>-AN2 |
-| eks                | EKS-FOT-DEV-<CLUSTER-NAME>-AN2 |
-| s3                 | S3-FOT-DEV-??-AN2 |
-| rds                | RDS-FOT-DEV-<SERVICE-NAME>-AN2 |
+| load balancers     | <ALB/NLB>-FOT-<ENV>-<SERVICE-NAME>-<REGION>-<ZONE> |
+| ecr                | ECR-FOT-<ENV>-<SERVICE-NAME>-<REGION> |
+| eks                | EKS-FOT-<ENV>-<CLUSTER-NAME>-<REGION> |
+| s3                 | S3-FOT-<ENV>-<BUCKET-NAME>-<REGION> |
+| rds                | RDS-FOT-<ENV>-<SERVICE-NAME>-<REGION> |
 <br>
 
 ## NETWORK
