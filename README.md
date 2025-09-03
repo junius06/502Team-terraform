@@ -108,7 +108,7 @@ graph LR;
 
 ### ROUTE TABLES
 #### 1. EKS  
-- RTB Name : RTB-FOT-DEV-EKS-AN2  
+- **RTB Name** : RTB-FOT-DEV-EKS-AN2  
 
 | Destination | Target                 |
 | ----------- | ---------------------- |
@@ -116,7 +116,7 @@ graph LR;
 | 0.0.0.0/0   | NGW-FOT-DEV-PUBLIC-AN2 |
 
 #### 2. ELB  
-- RTB Name : RTB-FOT-DEV-ELB-AN2  
+- **RTB Name** : RTB-FOT-DEV-ELB-AN2  
 
 | Destination | Target              |
 | ----------- | ------------------- |
@@ -124,7 +124,7 @@ graph LR;
 | 0.0.0.0/0   | IGW-FOT-DEV-ELB-AN2 |
 
 #### 3. RDS  
-- RTB Name : RTB-FOT-DEV-RDS-AN2  
+- **RTB Name** : RTB-FOT-DEV-RDS-AN2  
 
 | Destination | Target              |
 | ----------- | ------------------- |
