@@ -95,11 +95,13 @@ VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-RDS-AN2
 - MGMT DB-BASTION서버의 NAT IP를 RDS에 접근 가능하도록 RBS-SG Inbound에 추가한다. (VPC Peering X)  
 
 ```mermaid
-graph TD;
+graph LR; 
     BASTION-->RDS;
     EKS-->RDS;
     RDS-->EKS;
 ```
+<!-- TD(Top Down)    : 세로 방향으로 다이어그램 생성 -->
+<!-- LR(Left Right)  : 가로 방향으로 다이어그램 생성 -->
 
 ### ROUTE TABLES
 #### 1. EKS  
