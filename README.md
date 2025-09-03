@@ -104,6 +104,7 @@ graph TD;
 ### ROUTE TABLES
 #### 1. EKS  
 - RTB Name : RTB-FOT-DEV-EKS-AN2  
+
 | Destination | Target                 |
 | ----------- | ---------------------- |
 | 10.0.0.0/20 | local                  |
@@ -111,6 +112,7 @@ graph TD;
 
 #### 2. ELB  
 - RTB Name : RTB-FOT-DEV-ELB-AN2  
+
 | Destination | Target              |
 | ----------- | ------------------- |
 | 10.0.0.0/20 | local               |
@@ -118,6 +120,7 @@ graph TD;
 
 #### 3. RDS  
 - RTB Name : RTB-FOT-DEV-RDS-AN2  
+
 | Destination | Target              |
 | ----------- | ------------------- |
 | 10.x.x.x/26 | local               |
