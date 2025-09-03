@@ -1,6 +1,8 @@
 # architect  
+- 테라폼으로 생성되는 아키텍처 구성도 그려넣기.
 
 ## Layout
+```
 502Team-terraform/
 ├─ README.md
 ├─ environments/
@@ -27,20 +29,19 @@
 └─ live/              # 환경 별 add-ons 등 추가하기.
    ├─ dev/
    ├─ stg/
-   └─ prd/
-
-
-
+   └─ prd/  
+```
 - modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).  
 - live/: 실제 배포 단위. 환경(dev/stage/prod)과 리소스 도메인(vpc/eks/addons) 별 state 분리.  
 <br>
 
-## 실행 명령어
+### 실행 명령어
 ```
 terraform init
 terraform plan ~
 terraform apply ~
 ```
+<br>
 
 ## Naming Rules
 1. AWS Services  
@@ -53,7 +54,7 @@ ex: alb-502team-dev-web-an2-1a
 | ------------------ | ------------ |
 | vpc                | VPC-FOT-DEV-<SERVICE>-AN2 | 
 | subnet             | PUBLIC-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-<SERVICE-NAME>-AN2-2B |
-| route table        | ROUTE-TABLE-FOT-DEV-<SERVICE-NAME>-AN2 |
+| route table        | RTB-FOT-DEV-<SERVICE-NAME>-AN2 |
 | internet gateway   | IGW-FOT-DEV-ELB-AN2 |
 | nat gateways       | NGW-FOT-DEV-PUBLIC-AN2 |
 | elastic IPs        | EIP-FOT-DEV-<SERVICE-NAME>-AN2 | 
@@ -68,44 +69,52 @@ ex: alb-502team-dev-web-an2-1a
 | eks                | EKS-FOT-DEV-<CLUSTER-NAME>-AN2 |
 | s3                 | S3-FOT-DEV-??-AN2 |
 | rds                | RDS-FOT-DEV-<SERVICE-NAME>-AN2 |
+<br>
 
-### NETWORK CIDR  
-
-1. Application Service  
-
-| RESOURCE      | RESOURCE NAME                        | CIDR        |
-| ------------- | ------------------------------------ | ----------- |
-| VPC           | VPC-FOT-DEV-EKS-AN2                  |             |
-| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-1A     | 10.0.1.0/24 |
-|               | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-2B     | 10.0.2.0/24 |
-| PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A     | 10.0.1.0/24 |
-|               | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B     | 10.0.2.0/24 |
-| PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A    | 10.0.10.0/24 |
-|               | PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B    | 10.0.20.0/24 |
-| RDS-SUBNET    | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A    | 10.0.30.0/24 |
-|               | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B    | 10.0.40.0/24 |
-
-
+## NETWORK
+### CIDR  
+#### 1. EKS (Application Service)  
 | RESOURCE      | RESOURCE NAME                                                                | CIDR                           |
 | ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
-| VPC           | VPC-FOT-DEV-EKS-AN2                                                          |                                |
+| VPC           | VPC-FOT-DEV-EKS-AN2                                                          | 10.0.0.0/20                    |
 | PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-EKS-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-EKS-AN2-2B       | 10.0.1.0/24 <br> 10.0.2.0/24   |
 | PUBLIC-SUBNET | PUBLIC-SUBNET-FOT-DEV-ELB-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-ELB-AN2-2B       | 10.0.1.0/24 <br> 10.0.2.0/24   |
 | PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-EKS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-EKS-AN2-2B     | 10.0.10.0/24 <br> 10.0.20.0/24 |
 | RDS-SUBNET    | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B     | 10.0.30.0/24 <br> 10.0.40.0/24 |
 
+#### 2. RDS  
+| RESOURCE      | RESOURCE NAME                                                                | CIDR                           |
+| ------------- | ---------------------------------------------------------------------------- | ------------------------------ |
+| VPC           | VPC-FOT-DEV-RDS-AN2                                                          |                                |
+| PRIVATE-SUBNET| PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B     | 10.x.x.x/26 <br> 10.x.x.x/26   |
 
 
-2. RDS  
-| RESOURCE | RESOURCE NAME | CIDR |
-| -------- | ------------- | ---- |
-| VPC             | VPC-FOT-DEV-RDS-AN2 |
-| PRIVATE-SUBNET  | PRIVATE-SUBNET-FOT-DEV-RDS-AN2-1A <br> PRIVATE-SUBNET-FOT-DEV-RDS-AN2-2B | 10.x.x.x/26 <br> 10.x.x.x/26 |
+### VPC Peering  
+VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-MGMT-AN2  
+VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-RDS-AN2  
+- MGMT DB-BASTION서버의 NAT IP를 RDS에 접근 가능하도록 RBS-SG Inbound에 추가한다. (VPC Peering X)  
 
-3. MGMT  
-| RESOURCE | RESOURCE NAME | CIDR |
-| -------- | ------------- | ---- |
-| VPC             | VPC-FOT-DEV-MGMT-AN2 |
-| PUBLIC-SUBNET   | PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-1A <br> PUBLIC-SUBNET-FOT-DEV-MGMT-AN2-2B | 10.0.1.0/24 <br> 10.0.2.0/24 |
+```mermaid
+graph TD;
+    BASTION-->RDS;
+    EKS-->RDS;
+    RDS-->EKS;
+```
 
 ### ROUTE TABLES
+#### 1. EKS  
+| Route Table         | Destination | Target                 |
+| ------------------- | ----------- | ---------------------- |
+| RTB-FOT-DEV-EKS-AN2 | 10.0.0.0/20 | local                  |
+|                     | 0.0.0.0/0   | NGW-FOT-DEV-PUBLIC-AN2 |
+
+#### 2. ELB  
+| Route Table         | Destination | Target              |
+| ------------------- | ----------- | ------------------- |
+| RTB-FOT-DEV-ELB-AN2 | 10.0.0.0/20 | local               |
+|                     | 0.0.0.0/0   | IGW-FOT-DEV-ELB-AN2 |
+
+#### 3. RDS (RTB-FOT-DEV-RDS-AN2)  
+| Route Table         | Destination | Target              |
+| ------------------- | ----------- | ------------------- |
+| RTB-FOT-DEV-ELB-AN2 | 10.x.x.x/26 | local               |
