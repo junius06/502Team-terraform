@@ -103,18 +103,21 @@ graph TD;
 
 ### ROUTE TABLES
 #### 1. EKS  
-| Route Table         | Destination | Target                 |
-| ------------------- | ----------- | ---------------------- |
-| RTB-FOT-DEV-EKS-AN2 | 10.0.0.0/20 | local                  |
-|                     | 0.0.0.0/0   | NGW-FOT-DEV-PUBLIC-AN2 |
+- RTB Name : RTB-FOT-DEV-EKS-AN2  
+| Destination | Target                 |
+| ----------- | ---------------------- |
+| 10.0.0.0/20 | local                  |
+| 0.0.0.0/0   | NGW-FOT-DEV-PUBLIC-AN2 |
 
 #### 2. ELB  
-| Route Table         | Destination | Target              |
-| ------------------- | ----------- | ------------------- |
-| RTB-FOT-DEV-ELB-AN2 | 10.0.0.0/20 | local               |
-|                     | 0.0.0.0/0   | IGW-FOT-DEV-ELB-AN2 |
+- RTB Name : RTB-FOT-DEV-ELB-AN2  
+| Destination | Target              |
+| ----------- | ------------------- |
+| 10.0.0.0/20 | local               |
+| 0.0.0.0/0   | IGW-FOT-DEV-ELB-AN2 |
 
 #### 3. RDS  
-| Route Table         | Destination | Target              |
-| ------------------- | ----------- | ------------------- |
-| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               |
+- RTB Name : RTB-FOT-DEV-RDS-AN2  
+| Destination | Target              |
+| ----------- | ------------------- |
+| 10.x.x.x/26 | local               |
