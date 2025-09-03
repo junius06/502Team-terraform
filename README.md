@@ -97,8 +97,9 @@ VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-RDS-AN2
 ```mermaid
 graph LR; 
     BASTION-->RDS;
-    EKS-->RDS;
-    RDS-->EKS;
+graph LR;
+    EKS --> RDS;
+    RDS --> EKS;
 ```
 <!-- TD(Top Down)    : 세로 방향으로 다이어그램 생성 -->
 <!-- LR(Left Right)  : 가로 방향으로 다이어그램 생성 -->
