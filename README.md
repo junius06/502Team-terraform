@@ -44,7 +44,7 @@ terraform apply ~
 <br>
 
 ## Naming Rules
-`**[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]**`  
+**[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]**  
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
