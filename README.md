@@ -43,11 +43,11 @@ terraform apply ~
 ```
 
 ## Naming Rules
-1. AWS Services
-`[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]`
+1. AWS Services  
+`[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]`  
 ex: alb-502team-dev-web-an2-1a  
-- VPC쪽은 대문자
-- 이외에는 소문자
+- VPC쪽은 대문자  
+- 이외에는 소문자  
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
@@ -69,7 +69,8 @@ ex: alb-502team-dev-web-an2-1a
 | s3                 | S3-FOT-DEV-??-AN2 |
 | rds                | RDS-FOT-DEV-<SERVICE-NAME>-AN2 |
 
-### NETWORK CIDR
+### NETWORK CIDR  
+
 1. Application Service  
 | RESOURCE | RESOURCE NAME | CIDR |
 | -------- | ------------- | ---- |
