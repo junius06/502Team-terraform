@@ -97,6 +97,8 @@ VPC-FOT-DEV-EKS-AN2 <-> VPC-FOT-DEV-RDS-AN2
 ```mermaid
 graph LR; 
     BASTION-->RDS;
+```
+```mermaid
 graph LR;
     EKS --> RDS;
     RDS --> EKS;
