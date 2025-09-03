@@ -44,11 +44,7 @@ terraform apply ~
 <br>
 
 ## Naming Rules
-1. AWS Services  
-`[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]`  
-ex: alb-502team-dev-web-an2-1a  
-- VPC쪽은 대문자  
-- 이외에는 소문자  
+`**[aws-serivce]-[project]-[env]-[app-service]-[regionCode]-[Zone]**`  
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
