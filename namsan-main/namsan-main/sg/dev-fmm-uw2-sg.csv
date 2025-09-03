@@ -1,0 +1,21 @@
+id,sg_name,type,from_port,to_port,protocol_type,cidr_block,src_sg,prefix_id,rule_description,
+1,dev-fmm-uw2-sg-eks-mgmt,ingress,22,22,TCP,165.225.229.0/24,,,,Allow SSH - EKS MGMT(My IP)
+2,dev-fmm-uw2-sg-eks-mgmt,egress,443,443,TCP,0.0.0.0/0,,,,Allow SSH - EKS MGMT(HTTPS)
+3,dev-fmm-uw2-sg-eks-mgmt,egress,80,80,TCP,0.0.0.0/0,,,,Allow SSH - EKS MGMT(HTTP)
+4,dev-fmm-uw2-sg-eks-mgmt,ingress,22,22,TCP,203.236.8.208/32,,,,Allow SSH - EKS MGMT(My IP)
+
+100,dev-fmm-uw2-sg-eks-cluster,ingress,443,443,TCP,,dev-fmm-uw2-sg-eks-worker,,,Allow WKND
+101,dev-fmm-uw2-sg-eks-cluster,ingress,443,443,TCP,,dev-fmm-uw2-sg-eks-mgmt,,,Allow MGMT
+102,dev-fmm-uw2-sg-eks-cluster,egress,10250,10250,TCP,,dev-fmm-uw2-sg-eks-worker,,,Allow WKND
+
+
+201,dev-fmm-uw2-sg-eks-worker,ingress,10250,10250,TCP,,dev-fmm-uw2-sg-eks-cluster,,,Allow CPN
+202,dev-fmm-uw2-sg-eks-worker,ingress,30000,32767,TCP,0.0.0.0/0,,,,Allow Any 30000-32767 Port
+203,dev-fmm-uw2-sg-eks-worker,ingress,-1,-1,-1,,dev-fmm-uw2-sg-eks-worker,,,Allow WKND
+204,dev-fmm-uw2-sg-eks-worker,egress,-1,-1,-1,,dev-fmm-uw2-sg-eks-worker,,,Allow WKND
+205,dev-fmm-uw2-sg-eks-worker,egress,443,443,TCP,,dev-fmm-uw2-sg-eks-cluster,,,Allow CPN
+206,dev-fmm-uw2-sg-eks-worker,egress,443,443,TCP,0.0.0.0/0,,,,Allow HTTPS
+207,dev-fmm-uw2-sg-eks-worker,egress,2049,2049,TCP,,scg-an2-mkkim-dev-efs,,,Allow EFS
+208,dev-fmm-uw2-sg-eks-worker,ingress,9443,9443,TCP,,dev-fmm-uw2-sg-eks-cluster,,,Allow CPN(webhook)
+
+301,scg-an2-mkkim-dev-efs,ingress,2049,2049,TCP,,dev-fmm-uw2-sg-eks-worker,,,Allow WKND

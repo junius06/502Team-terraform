@@ -1,0 +1,34 @@
+##################################
+# IAM Role
+##################################
+iam_role_name : "dev-fmm-uw2-role-eks-worker"
+iam_instance_profile_role: "false"
+iam_assume_role_policy : {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Principal": {
+                "Service": [
+                    "ec2.amazonaws.com"
+                ]
+            }
+        }
+    ]
+}
+##################################
+# IAM Policy(Managed)
+##################################
+iam_managed_policy:
+- "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+- "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+- "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+- "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+- "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+##################################
+# IAM Policy(Custom)
+##################################
+iam_custom_policy: []

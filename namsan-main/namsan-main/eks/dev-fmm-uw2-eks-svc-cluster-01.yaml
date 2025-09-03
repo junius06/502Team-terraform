@@ -1,0 +1,91 @@
+##################################
+# EKS Cluster
+##################################
+eks_cluster_name: "dev-fmm-uw2-eks-svc-cluster-01"
+eks_cluster_version: "1.31"
+eks_cluster_role_arn: "arn:aws:iam::859234351948:role/dev-fmm-uw2-role-eks-cluster"
+eks_cluster_auth_mode: "API_AND_CONFIG_MAP" # CONFIG_MAP, API or API_AND_CONFIG_MAP
+eks_cluster_allow_admin_access: "true" # default true
+eks_cluster_secret_enc_kms_key_arn: ""
+eks_cluster_tags:
+  "Name": "dev-fmm-uw2-eks-svc-cluster-01"
+eks_cluster_vpc: "dev-fmm-uw2-vpc"
+eks_cluster_subnets:
+  [
+    "dev-fmm-uw2-eks-pri-a",
+    "dev-fmm-uw2-eks-pri-b",
+  ]
+eks_cluster_security_group: ["dev-fmm-uw2-sg-eks-cluster"]
+eks_cluster_public_endpoint_access: "false"
+eks_cluster_private_endpoint_access: "true"
+eks_cluster_service_ipv4_cidr: "10.7.224.0/22"
+eks_cluster_enabled_log_types: [] # api/audit/authenticator/controllerManager/scheduler
+##################################
+# EKS Cluster Addon
+##################################
+eks_cluster_addon: # default addon : coredns/kube-proxy/vpc-cni 우선 생성 후, 나머지 Addon은 클러스터 생성 후 생성 필요
+  - name: "coredns"
+    version: "v1.11.3-eksbuild.1"
+    role_arn: ""
+  - name: "kube-proxy"
+    version: "v1.31.2-eksbuild.3" # v1.30.0-eksbuild.3
+    role_arn: ""
+  - name: "vpc-cni"
+    version: "v1.19.0-eksbuild.1"
+    role_arn: ""
+  # - name: "eks-pod-identity-agent"
+  #   version: "v1.2.0-eksbuild.1"
+  #   role_arn: ""
+  # - name: "aws-efs-csi-driver"
+  #   version: "v2.0.4-eksbuild.1"
+  #   role_arn: "arn:aws:iam::975050243255:role/role-glb-eks-dev-efscontrol-01"
+##################################
+# EKS Node Group
+##################################
+eks_node_group:
+  - eks_node_group_name: "dev-fmm-uw2-eks-svc-ng-01"
+    eks_node_group_role_arn: "arn:aws:iam::859234351948:role/dev-fmm-uw2-role-eks-worker"
+    eks_node_group_subnets: ["dev-fmm-uw2-eks-pri-a", "dev-fmm-uw2-eks-pri-b"]
+    eks_node_group_scaling:
+      min_size: "1"
+      max_size: "1"
+      desired_size: "1" # 해당 부분 Cluster Autoscaling 설정을 예상하여 ignore_changes 적용 / 사전 콘솔 수정 후, yaml 동기화 필요
+    eks_node_group_update_config:
+      max_unavailable_type: "percent" # percent / number
+      max_unavailable_value: "10"
+    eks_node_group_tags:
+      "Name": "dev-fmm-uw2-eks-svc-ng-01"
+##################################
+# EKS Launch Template
+##################################
+eks_launch_template:
+  - eks_launch_template_name: "dev-fmm-uw2-eks-svc-lt-01"
+    eks_launch_template_ami: "ami-036ff9e6d58a3c148" # amazon-eks-node-al2023-x86_64-standard-1.31-v20241109(ami-036ff9e6d58a3c148 서울기준, ami-03ba8d3b3ca03ad9c 버지니아 기준)
+    eks_launch_template_instance_type: "t3.medium"
+    eks_launch_template_security_group: ["dev-fmm-uw2-sg-eks-worker"]
+    eks_launch_template_root_volume:
+      volume_device_name: "/dev/xvda" # 지정한 AMI의 root 볼륨의 디바이스명과 동일하게 해줘야 함!
+      volume_size: "30"
+      volume_type: "gp3"
+      volume_iops: "3000"
+      volume_kms_key_id: ""
+    eks_launch_template_sub_volume: []
+    eks_launch_template_resource_tags:
+      - resource_type: "instance" # instance / volume / network-interface
+        resource_tag:
+          "Name": "dev-fmm-uw2-ec2-eks-worker-01"
+    eks_launch_template_tags:
+      "Name": "dev-fmm-uw2-eks-svc-lt-01"
+##################################
+# EKS Cluster IAM Access
+##################################
+eks_cluster_iam_access:
+  - iam_arn: "arn:aws:iam::859234351948:role/dev-fmm-uw2-role-eks-mgmt"
+    policy_arn: "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+##################################
+# EKS Cluster Pod Identity
+##################################
+eks_cluster_pod_identity: []
+  # - iam_arn: "arn:aws:iam::975050243255:role/mkkim-eks-pod-identity-role"
+  #   namespace: "default"
+  #   service_account: "default"

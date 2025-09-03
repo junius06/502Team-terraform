@@ -1,0 +1,32 @@
+ec2_vpc           : "dev-fmm-uw2-vpc"
+ec2_iam_profile   : "dev-fmm-uw2-role-eks-mgmt" #없다면 ""
+ec2_ami           : "ami-03e38f46f79020a70" # ami-03e38f46f79020a70- 서울 -> AMI 없을 시, Error: collecting instance settings: couldn't find resource 발생
+ec2_instance_type : "t3.micro"
+ec2_keypair       : "mkkim-test"
+ec2_root_eni:
+  ec2_root_eni_subnet              : "dev-fmm-uw2-ext-pub-a"
+  ec2_root_eni_ip                  : "10.0.1.101"
+  ec2_root_eni_sg                  : ["dev-fmm-uw2-sg-eks-mgmt"]
+  ec2_root_eni_source_dest_check   : "true"
+ec2_sub_eni: []
+ec2_root_volume:
+  ec2_root_volume_type             : "gp3"
+  ec2_root_volume_size             : "20"
+  ec2_root_volume_iops             : ""
+  ec2_root_volume_throughput       : ""
+  ec2_root_volume_sub_tag          : 
+    "test" : "123123" # Name 태그 지정 시, 기존 네이밍 규칙 무시
+ec2_sub_volume:
+  - ec2_sub_volume_device_name       : "/dev/sdb"
+    ec2_sub_volume_type              : "gp3"
+    ec2_sub_volume_size              : "20"
+    ec2_sub_volume_iops              : ""
+    ec2_sub_volume_throughput        : ""
+    ec2_sub_volume_availability_zone : "ap-northeast-2a"
+    ec2_sub_volume_sub_tag           :
+      "test1" : "test123"
+ec2_encrypt         : "false"
+ec2_kms_key_arn     : ""
+ec2_user_data_file  : "dev-fmm-uw2-ec2-eks-mgmt-01a.sh"
+ec2_tags            :
+  "Name": dev-fmm-uw2-ec2-eks-mgmt-01a"
