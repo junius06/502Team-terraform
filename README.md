@@ -102,7 +102,7 @@ graph TD;
 ```
 
 ### ROUTE TABLES
-#### 1. EKS  
+<!-- #### 1. EKS  
 | Route Table         | Destination | Target                 |
 | ------------------- | ----------- | ---------------------- |
 | RTB-FOT-DEV-EKS-AN2 | 10.0.0.0/20 | local                  |
@@ -114,7 +114,74 @@ graph TD;
 | RTB-FOT-DEV-ELB-AN2 | 10.0.0.0/20 | local               |
 |                     | 0.0.0.0/0   | IGW-FOT-DEV-ELB-AN2 |
 
-#### 3. RDS (RTB-FOT-DEV-RDS-AN2)  
+#### 3. RDS  
 | Route Table         | Destination | Target              |
 | ------------------- | ----------- | ------------------- |
-| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               |
+| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               | -->
+
+<!-- 1) EKS -->
+#### 1. EKS 
+<table style="table-layout:fixed; width:100%;">
+  <thead>
+    <tr>
+      <th style="width:40%;">Route Table</th>
+      <th style="width:20%;">Destination</th>
+      <th style="width:40%;">Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="word-break:break-word;">RTB-FOT-DEV-EKS-AN2</td>
+      <td>10.0.0.0/20</td>
+      <td>local</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>0.0.0.0/0</td>
+      <td style="word-break:break-word;">NGW-FOT-DEV-PUBLIC-AN2</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 2) ELB -->
+#### 2. ELB 
+<table style="table-layout:fixed; width:100%; margin-top:8px;">
+  <thead>
+    <tr>
+      <th style="width:40%;">Route Table</th>
+      <th style="width:20%;">Destination</th>
+      <th style="width:40%;">Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RTB-FOT-DEV-ELB-AN2</td>
+      <td>10.0.0.0/20</td>
+      <td>local</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>0.0.0.0/0</td>
+      <td>IGW-FOT-DEV-ELB-AN2</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3) RDS -->
+#### 3. RDS
+<table style="table-layout:fixed; width:100%; margin-top:8px;">
+  <thead>
+    <tr>
+      <th style="width:40%;">Route Table</th>
+      <th style="width:20%;">Destination</th>
+      <th style="width:40%;">Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RTB-FOT-DEV-RDS-AN2</td>
+      <td>10.x.x.x/26</td>
+      <td>local</td>
+    </tr>
+  </tbody>
+</table>
