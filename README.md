@@ -117,11 +117,11 @@ graph TD;
 #### 3. RDS  
 | Route Table         | Destination | Target              |
 | ------------------- | ----------- | ------------------- |
-| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               | -->
+| RTB-FOT-DEV-RDS-AN2 | 10.x.x.x/26 | local               |
 
 <!-- 1) EKS -->
 #### 1. EKS 
-<table style="table-layout:fixed; width:100%;">
+<table style="table-layout:fixed; width:100%; margin-top:8px;">
   <thead>
     <tr>
       <th style="width:40%;">Route Table</th>
