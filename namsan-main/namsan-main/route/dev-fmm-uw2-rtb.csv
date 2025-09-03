@@ -1,3 +1,0 @@
-id,route_table,dst_cidr_block,target_type,target
-1,dev-fmm-uw2-rtb-eks-pri-a,0.0.0.0/0,nat,dev-fmm-uw2-nat-ext-pub-b
-2,dev-fmm-uw2-rtb-eks-pri-b,0.0.0.0/0,nat,dev-fmm-uw2-nat-ext-pub-b
