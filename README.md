@@ -5,41 +5,113 @@
 ```
 502Team-terraform/
 ├─ README.md
+├─ s3
+│  ├─ vpc.tfstate
+│  └─ sg.tfstate
 ├─ environments/
 │  ├─ dev.yaml
 │  ├─ stg.yaml
 │  └─ prd.yaml
 ├─ modules/           # dev, stg, prd 공통 모듈
+│  ├─ addons/
+│  │  ├─ main.tf      # core addons(aws-ebs-csi, coredns 등) + helm 차트
+│  │  ├─ variables.tf
+│  │  └─ outputs.tf
 │  ├─ vpc/
-│  │  ├─ main.tf      # VPC, 서브넷, 라우팅, NAT
+│  │  ├─ main.tf
 │  │  ├─ variables.tf
 │  │  └─ outputs.tf
 │  ├─ eks/
 │  │  ├─ main.tf      # EKS cluster, IRSA(OIDC), node groups
 │  │  ├─ variables.tf
 │  │  └─ outputs.tf
-│  ├─ addons/
-│  │  ├─ main.tf      # core addons(aws-ebs-csi, coredns 등) + helm 차트
-│  │  ├─ variables.tf
-│  │  └─ outputs.tf
 │  └─ iam/
 │     ├─ main.tf      # cluster-admin role, IRSA용 IAM policy/role 등
 │     ├─ variables.tf
 │     └─ outputs.tf
-└─ live/              # 환경 별 add-ons 등 추가하기.
+└─ live/
+   ├─ terragrunt.hcl    # backend 동적 자동화
    ├─ dev/
+   │  ├─ env.hcl
+   │  ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  ├─ vpc-endpoint/
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  ├─ eni/
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  └─ sg/
+   |     ├─ main.tf
+   |     ├─ variables.tf
+   |     ├─ outputs.tf
+   |     └─ backend.tf
    ├─ stg/
-   └─ prd/  
+   │  ├─ env.hcl
+   │  ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  ├─ vpc-endpoint/
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  ├─ eni/
+   |  |  ├─ main.tf
+   |  |  ├─ variables.tf
+   |  |  ├─ outputs.tf
+   |  |  └─ backend.tf
+   │  └─ sg/
+   |     ├─ main.tf
+   |     ├─ variables.tf
+   |     ├─ outputs.tf
+   |     └─ backend.tf
+   └─ prd/
+      ├─ env.hcl
+      ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
+      |  ├─ main.tf
+      |  ├─ variables.tf
+      |  ├─ outputs.tf
+      |  └─ backend.tf
+      ├─ vpc-endpoint/
+      |  ├─ main.tf
+      |  ├─ variables.tf
+      |  ├─ outputs.tf
+      |  └─ backend.tf
+      ├─ eni/
+      |  ├─ main.tf
+      |  ├─ variables.tf
+      |  ├─ outputs.tf
+      |  └─ backend.tf
+      └─ sg/
+         ├─ main.tf
+         ├─ variables.tf
+         ├─ outputs.tf
+         └─ backend.tf
 ```
+
 - modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).  
 - live/: 실제 배포 단위. 환경(dev/stage/prod)과 리소스 도메인(vpc/eks/addons) 별 state 분리.  
+- s3: 해당 디렉터리는 tfstate 등 민감 정보에 대한 파일을 저장하는 디렉터리로, git repo에 업로드 금지.
 <br>
 
 ### 실행 명령어
 ```
-terraform init
-terraform plan ~
-terraform apply ~
+REGION_CHOICE값이 없으면 에러 발생
+REGION_CHOICE=eu terragrunt -chdir=live/${env}$/${stack}$ plan
+REGION_CHOICE=us terragrunt -chdir=live/${env}$/${stack}$ plan
+terraform -chdir=live/${env}/vpc init
+terraform -chdir=live/${env}/vpc plan
+terraform -chdir=live/${env}/vpc apply -var="env=${dev}" -auto-apporve
 ```
 <br>
 
