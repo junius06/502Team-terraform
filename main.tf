@@ -23,6 +23,7 @@ module "vpc" {
   name_suffix            = "main"
   cidr                   = var.vpc_cidr
   azs                    = local.azs_full
+  
   private_subnets        = var.private_subnets
   public_subnets         = var.public_subnets
 
@@ -35,7 +36,7 @@ module "vpc" {
 
 
 # ─────────────────────────────
-# 1. EKS
+# 2. EKS
 # ─────────────────────────────
 module "eks" {
   source = "./modules/eks"
@@ -55,14 +56,20 @@ module "eks" {
   tags = local.common_tags
 }
 
-# 2) IAM (EC2 SSM 접속용 역할/인스턴스 프로파일)
+
+# ─────────────────────────────
+# 3. IAM
+# ─────────────────────────────
 # module "iam" {
 #   source = "./modules/iam"
 #   env    = var.env
 #   tags   = local.common_tags
 # }
 
-# 3) EC2 (퍼블릭 서브넷에 배스천 1대)
+
+# ─────────────────────────────
+# 4. EC2
+# ─────────────────────────────
 # module "ec2" {
 #   source = "./modules/ec2"
 
@@ -77,3 +84,8 @@ module "eks" {
 
 #   tags = local.common_tags
 # }
+
+
+# ─────────────────────────────
+# 5. Security Groups
+# ─────────────────────────────
