@@ -15,12 +15,12 @@ terraform workspace select {env}-{region_code}   # 배포할 환경-리전 워�
 # ex: terraform workspace select dev-us || terraform workspace new dev-us
 
 # 2) 워크스페이스와 동일한 이름의 tfvars 파일 지정하여 배포
-terraform apply -var-file=tfvars/{env}/{env}-{region_code}.tfvars
+terraform apply -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```
 
 ### 모듈 삭제 수동방법
 ```
-terraform destroy -var-file=tfvars/{env}/{env}-{region_code}.tfvars
+terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```
 <br>
 
@@ -28,19 +28,13 @@ terraform destroy -var-file=tfvars/{env}/{env}-{region_code}.tfvars
 ```
 502Team-terraform/
 ├── modules/
-│   ├── iam/
-│   │   ├── variables.tf
-│   │   ├── main.tf
-│   │   └── outputs.tf
+│   ├── iam/ 
+│   │   └── {main.tf, variables.tf, outputs.tf}
 │   ├── vpc/
-│   │   ├── variables.tf
-│   │   ├── main.tf
-│   │   └── outputs.tf
+│   │   └── {main.tf, variables.tf, outputs.tf}
 │   └── ec2/
-│       ├── variables.tf
-│       ├── main.tf
-│       └── outputs.tf
-├── tfvars/
+│       └── {main.tf, variables.tf, outputs.tf}
+├── variables/
 │   ├── dev
 │   │   ├── dev-eu.tfvars
 │   │   └── dev-us.tfvars
@@ -52,13 +46,12 @@ terraform destroy -var-file=tfvars/{env}/{env}-{region_code}.tfvars
 │       └── prd-us.tfvars
 ├── backend.tf
 ├── provider.tf
-├── variables.tf
 ├── main.tf
 └── outputs.tf
 ```
 
-- modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).   
-- s3: 해당 디렉터리는 tfstate 등 민감 정보에 대한 파일을 저장하는 디렉터리로, git repo에 업로드 금지.
+- `modules/`: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).   
+- `variables/`: 
 <br>
 
 ## Naming Rules
