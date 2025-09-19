@@ -1,7 +1,57 @@
 # architect  
 - 테라폼으로 생성되는 아키텍처 구성도 그려넣기.
 
+## 명령어
+### 모듈 생성 (1번 방법)
+```
+REGION_CHOICE=eu terragrunt -chdir=live/${env}$/${stack}$ plan
+REGION_CHOICE=us terragrunt -chdir=live/${env}$/${stack}$ plan
+terraform -chdir=live/${env}/vpc init
+terraform -chdir=live/${env}/vpc plan
+terraform -chdir=live/${env}/vpc apply -var="env=${dev}" -auto-apporve
+```
+REGION_CHOICE값이 없으면 에러 발생  
+
+### 모듈 생성 (2번 방법)
+```
+# 0) 최초 1회: backend init
+terraform init
+
+# 1) 워크스페이스를 “환경-리전”으로 선택/생성
+terraform workspace new dev-us   # 처음 한 번
+terraform workspace select dev-us
+
+terraform apply -var-file=tfvars/dev.tfvars
+```
+
+### 모듈 삭제
+```
+```
+<br>
+
 ## Layout
+```
+502Team-terraform/
+├─ backend.tf
+├─ provider.tf
+├─ variables.tf
+├─ main.tf
+├─ outputs.tf
+└─ modules/
+   ├─ iam/
+   │  ├─ variables.tf
+   │  ├─ main.tf
+   │  └─ outputs.tf
+   ├─ vpc/
+   │  ├─ variables.tf
+   │  ├─ main.tf
+   │  └─ outputs.tf
+   └─ ec2/
+      ├─ variables.tf
+      ├─ main.tf
+      └─ outputs.tf
+```
+
 ```
 502Team-terraform/
 ├─ README.md
@@ -102,17 +152,6 @@
 - modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).  
 - live/: 실제 배포 단위. 환경(dev/stage/prod)과 리소스 도메인(vpc/eks/addons) 별 state 분리.  
 - s3: 해당 디렉터리는 tfstate 등 민감 정보에 대한 파일을 저장하는 디렉터리로, git repo에 업로드 금지.
-<br>
-
-### 실행 명령어
-```
-REGION_CHOICE값이 없으면 에러 발생
-REGION_CHOICE=eu terragrunt -chdir=live/${env}$/${stack}$ plan
-REGION_CHOICE=us terragrunt -chdir=live/${env}$/${stack}$ plan
-terraform -chdir=live/${env}/vpc init
-terraform -chdir=live/${env}/vpc plan
-terraform -chdir=live/${env}/vpc apply -var="env=${dev}" -auto-apporve
-```
 <br>
 
 ## Naming Rules
