@@ -1,23 +1,23 @@
 # ─────────────────────────────
 # 필수 입력(반드시 tfvars로 주입)
 # ─────────────────────────────
-variable "env" {
-  description = "Environment: dev | stg | prd"
-  type        = string
-  validation {
-    condition     = contains(["dev","stg","prd"], var.env)
-    error_message = "Environment must be one of: dev, stg, prd."
-  }
-}
+# variable "env" {
+#   description = "Environment: dev | stg | prd"
+#   type        = string
+#   validation {
+#     condition     = contains(["dev","stg","prd"], var.env)
+#     error_message = "Environment must be one of: dev, stg, prd."
+#   }
+# }
 
-variable "region" {
-  description = "AWS region: eu-west-1 | us-west-2"
-  type        = string
-  validation {
-    condition     = contains(["eu-west-1","us-west-2"], var.region)
-    error_message = "Region must be one of: eu-west-1, us-west-2."
-  }
-}
+# variable "region" {
+#   description = "AWS region: eu-west-1 | us-west-2"
+#   type        = string
+#   validation {
+#     condition     = contains(["eu-west-1","us-west-2"], var.region)
+#     error_message = "Region must be one of: eu-west-1, us-west-2."
+#   }
+# }
 
 # ─────────────────────────────
 # VPC 파라미터 (환경별 CIDR 상이 → 기본값 제거)
