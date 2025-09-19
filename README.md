@@ -2,155 +2,62 @@
 - 테라폼으로 생성되는 아키텍처 구성도 그려넣기.
 
 ## 명령어
-### 모듈 생성 (1번 방법)
-```
-REGION_CHOICE=eu terragrunt -chdir=live/${env}$/${stack}$ plan
-REGION_CHOICE=us terragrunt -chdir=live/${env}$/${stack}$ plan
-terraform -chdir=live/${env}/vpc init
-terraform -chdir=live/${env}/vpc plan
-terraform -chdir=live/${env}/vpc apply -var="env=${dev}" -auto-apporve
-```
 REGION_CHOICE값이 없으면 에러 발생  
 
-### 모듈 생성 (2번 방법)
+### 모듈 생성 수동방법
 ```
 # 0) 최초 1회: backend init
 terraform init
 
 # 1) 워크스페이스를 “환경-리전”으로 선택/생성
-terraform workspace new dev-us   # 처음 한 번
-terraform workspace select dev-us
+terraform workspace new {env}-{region_code}      # 최초 한 번
+terraform workspace select {env}-{region_code}   # 배포할 환경-리전 워크스페이스
+# ex: terraform workspace select dev-us || terraform workspace new dev-us
 
-terraform apply -var-file=tfvars/dev.tfvars
+# 2) 워크스페이스와 동일한 이름의 tfvars 파일 지정하여 배포
+terraform apply -var-file=tfvars/{env}/{env}-{region_code}.tfvars
 ```
 
-### 모듈 삭제
+### 모듈 삭제 수동방법
 ```
+terraform destroy -var-file=tfvars/{env}/{env}-{region_code}.tfvars
 ```
 <br>
 
 ## Layout
 ```
 502Team-terraform/
-├─ backend.tf
-├─ provider.tf
-├─ variables.tf
-├─ main.tf
-├─ outputs.tf
-└─ modules/
-   ├─ iam/
-   │  ├─ variables.tf
-   │  ├─ main.tf
-   │  └─ outputs.tf
-   ├─ vpc/
-   │  ├─ variables.tf
-   │  ├─ main.tf
-   │  └─ outputs.tf
-   └─ ec2/
-      ├─ variables.tf
-      ├─ main.tf
-      └─ outputs.tf
+├── modules/
+│   ├── iam/
+│   │   ├── variables.tf
+│   │   ├── main.tf
+│   │   └── outputs.tf
+│   ├── vpc/
+│   │   ├── variables.tf
+│   │   ├── main.tf
+│   │   └── outputs.tf
+│   └── ec2/
+│       ├── variables.tf
+│       ├── main.tf
+│       └── outputs.tf
+├── tfvars/
+│   ├── dev
+│   │   ├── dev-eu.tfvars
+│   │   └── dev-us.tfvars
+│   ├── stg
+│   │   ├── stg-eu.tfvars
+│   │   └── stg-us.tfvars
+│   └── prd
+│       ├── prd-eu.tfvars
+│       └── prd-us.tfvars
+├── backend.tf
+├── provider.tf
+├── variables.tf
+├── main.tf
+└── outputs.tf
 ```
 
-```
-502Team-terraform/
-├─ README.md
-├─ s3
-│  ├─ vpc.tfstate
-│  └─ sg.tfstate
-├─ environments/
-│  ├─ dev.yaml
-│  ├─ stg.yaml
-│  └─ prd.yaml
-├─ modules/           # dev, stg, prd 공통 모듈
-│  ├─ addons/
-│  │  ├─ main.tf      # core addons(aws-ebs-csi, coredns 등) + helm 차트
-│  │  ├─ variables.tf
-│  │  └─ outputs.tf
-│  ├─ vpc/
-│  │  ├─ main.tf
-│  │  ├─ variables.tf
-│  │  └─ outputs.tf
-│  ├─ eks/
-│  │  ├─ main.tf      # EKS cluster, IRSA(OIDC), node groups
-│  │  ├─ variables.tf
-│  │  └─ outputs.tf
-│  └─ iam/
-│     ├─ main.tf      # cluster-admin role, IRSA용 IAM policy/role 등
-│     ├─ variables.tf
-│     └─ outputs.tf
-└─ live/
-   ├─ terragrunt.hcl    # backend 동적 자동화
-   ├─ dev/
-   │  ├─ env.hcl
-   │  ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  ├─ vpc-endpoint/
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  ├─ eni/
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  └─ sg/
-   |     ├─ main.tf
-   |     ├─ variables.tf
-   |     ├─ outputs.tf
-   |     └─ backend.tf
-   ├─ stg/
-   │  ├─ env.hcl
-   │  ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  ├─ vpc-endpoint/
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  ├─ eni/
-   |  |  ├─ main.tf
-   |  |  ├─ variables.tf
-   |  |  ├─ outputs.tf
-   |  |  └─ backend.tf
-   │  └─ sg/
-   |     ├─ main.tf
-   |     ├─ variables.tf
-   |     ├─ outputs.tf
-   |     └─ backend.tf
-   └─ prd/
-      ├─ env.hcl
-      ├─ vpc/           # vpc, subnet, nat_gateway, internet_gateway, route_table
-      |  ├─ main.tf
-      |  ├─ variables.tf
-      |  ├─ outputs.tf
-      |  └─ backend.tf
-      ├─ vpc-endpoint/
-      |  ├─ main.tf
-      |  ├─ variables.tf
-      |  ├─ outputs.tf
-      |  └─ backend.tf
-      ├─ eni/
-      |  ├─ main.tf
-      |  ├─ variables.tf
-      |  ├─ outputs.tf
-      |  └─ backend.tf
-      └─ sg/
-         ├─ main.tf
-         ├─ variables.tf
-         ├─ outputs.tf
-         └─ backend.tf
-```
-
-- modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).  
-- live/: 실제 배포 단위. 환경(dev/stage/prod)과 리소스 도메인(vpc/eks/addons) 별 state 분리.  
+- modules/: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).   
 - s3: 해당 디렉터리는 tfstate 등 민감 정보에 대한 파일을 저장하는 디렉터리로, git repo에 업로드 금지.
 <br>
 
