@@ -17,3 +17,29 @@ module "vpc" {
 
   tags = merge({ Module = "vpc" }, var.tags)
 }
+
+###########
+
+resource "aws_vpc" "this" {
+  cidr_block            = var.cidr
+  enable_dns_support    = true
+  enable_dns_hostnames  = true
+
+  tags = merge(var.tags, {
+    Name = "VPC-${tags.Project}-${local.name}"
+  })
+}
+
+resource "aws_subnet" "public_subnets" {
+  for_each = toset(var.public_subnets)
+  vpc_id = aws_vpc.this
+}
+
+resource "aws_subnet" "private_subnets" {
+  for_each = toset(var.private_subnets)
+  vpc_id = aws_vpc.this
+}
+
+# nat gateway
+# internet gateway
+# 

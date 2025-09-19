@@ -24,13 +24,17 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```
 <br>
 
-## Layout
+## 📁 Layout
 ```
 502Team-terraform/
 ├── modules/
 │   ├── iam/ 
 │   │   └── {main.tf, variables.tf, outputs.tf}
 │   ├── vpc/
+│   │   └── {main.tf, variables.tf, outputs.tf}
+│   ├── eks/
+│   │   └── {main.tf, variables.tf, outputs.tf}
+│   ├── sg/
 │   │   └── {main.tf, variables.tf, outputs.tf}
 │   └── ec2/
 │       └── {main.tf, variables.tf, outputs.tf}

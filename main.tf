@@ -1,3 +1,6 @@
+# ─────────────────────────────
+# 0. LOCAL
+# ─────────────────────────────
 locals {
   # AZ suffix와 region을 합쳐서 ["eu-west-1a","eu-west-1b","eu-west-1c"] 생성
   azs_full = [ for s in var.az_suffixes : "${var.region}${s}" ]
@@ -5,27 +8,23 @@ locals {
   common_tags = {
     Environment = var.env
     Region      = var.region
-    Project     = "FOT"
+    Project     = "fot"
   }
 }
 
-# 1) IAM (EC2 SSM 접속용 역할/인스턴스 프로파일)
-# module "iam" {
-#   source = "./modules/iam"
-#   env    = var.env
-#   tags   = local.common_tags
-# }
 
-# 2) VPC
+# ─────────────────────────────
+# 1. VPC
+# ─────────────────────────────
 module "vpc" {
   source = "./modules/vpc"
 
-  env             = var.env
-  name_suffix     = "main"
-  cidr            = var.vpc_cidr
-  azs             = local.azs_full
-  private_subnets = var.private_subnets
-  public_subnets  = var.public_subnets
+  env                    = var.env
+  name_suffix            = "main"
+  cidr                   = var.vpc_cidr
+  azs                    = local.azs_full
+  private_subnets        = var.private_subnets
+  public_subnets         = var.public_subnets
 
   enable_nat_gateway     = var.enable_nat_gateway
   single_nat_gateway     = var.single_nat_gateway
@@ -33,6 +32,35 @@ module "vpc" {
 
   tags = local.common_tags
 }
+
+
+# ─────────────────────────────
+# 1. EKS
+# ─────────────────────────────
+module "eks" {
+  source = "./modules/eks"
+
+  env                 = var.env
+  cluster_name        = "eks-${local.common_tags.Project}-${var.env}-${var.cluster_name_suffix}" # eks-fot-dev-uw2
+  cluster_version     = var.cluster_version
+
+  vpc_id              = module.vpc.vpc_id
+  private_subnet_ids  = module.vpc.private_subnet_ids
+
+  mng_instance_types  = var.mng_instance_types
+  mng_min_size        = var.mng_min_size
+  mng_desired_size    = var.mng_desired_size
+  mng_max_size        = var.mng_max_size
+
+  tags = local.common_tags
+}
+
+# 2) IAM (EC2 SSM 접속용 역할/인스턴스 프로파일)
+# module "iam" {
+#   source = "./modules/iam"
+#   env    = var.env
+#   tags   = local.common_tags
+# }
 
 # 3) EC2 (퍼블릭 서브넷에 배스천 1대)
 # module "ec2" {
