@@ -15,3 +15,5 @@ one_nat_gateway_per_az = false
 # ec2_instance_type = "t3.micro"
 # ssh_ingress_cidrs = ["x.x.x.x/32"] # Access IP
 # key_name          = "dev-ssh-key"
+
+# --- EKS ---
