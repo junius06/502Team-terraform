@@ -63,23 +63,23 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 
 | aws-services       | naming rule  |
 | ------------------ | ------------ |
-| vpc                | VPC-FOT-[ENV]-[SERVICE]-[REGION] | 
-| subnet             | PUBLIC-SUBNET-FOT-[ENV]-[SERVICE-NAME]-[REGION]-[ZONE] |
-| route table        | RTB-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
-| internet gateway   | IGW-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
-| nat gateways       | NGW-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
-| elastic IPs        | EIP-FOT-[ENV]-[SERVICE-NAME]-[REGION] | 
-| security groups    | SG-FOT-[ENV]-[SERVICE-NAME]-[REGION] | 
-| ec2                | EC2-FOT-[ENV]-[SERVICE-NAME]-[REGION]-[ZONE] |
-| ami                | yyyymmdd-AMI-[EC2-NAME] |
-| ebs volumes        | EBS-[EC2-NAME] |
-| snapshots          | SNAP-[EC2-NAME] | 
-| key-pairs          | KEY-[EC2-SERVICE-NAME] |
-| load balancers     | [ALB/NLB]-FOT-[ENV]-[SERVICE-NAME]-[REGION]-[ZONE] |
-| ecr                | ECR-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
-| eks                | EKS-FOT-[ENV]-[CLUSTER-NAME]-[REGION] |
-| s3                 | S3-FOT-[ENV]-[BUCKET-NAME]-[REGION] |
-| rds                | RDS-FOT-[ENV]-[SERVICE-NAME]-[REGION] |
+| `vpc`              | `VPC-[PROJECT]-[ENV]-[REGION-CODE]` |
+| `subnet`           | `PUBLIC-SUBNET-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
+| `route table`      | `RTB-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
+| `internet gateway` | `IGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
+| `nat gateways`     | `NGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
+| `elastic IPs`      | `EIP-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `| 
+| `security groups`  | `SG-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `| 
+| `ec2`              | `EC2-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
+| `ami`              | `yyyymmdd-AMI-[EC2-NAME]` |
+| `ebs volumes`      | `EBS-[EC2-NAME]` |
+| `snapshots`        | `SNAP-[EC2-NAME] `| 
+| `key-pairs`        | `KEY-[EC2-SERVICE-NAME]` |
+| `load balancers`   | `[ALB/NLB]-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
+| `ecr`              | `ECR-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
+| `eks`              | `EKS-[PROJECT]-[ENV]-[CLUSTER-NAME]-[REGION-CODE]` |
+| `s3`               | `S3-[PROJECT]-[ENV]-[BUCKET-NAME]-[REGION-CODE]` |
+| `rds`              | `RDS-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
 <br>
 
 ## NETWORK

@@ -2,8 +2,8 @@
 # 0. LOCAL
 # ─────────────────────────────
 locals {
-  # AZ suffix와 region을 합쳐서 ["eu-west-1a","eu-west-1b","eu-west-1c"] 생성
-  azs_full = [ for s in var.az_suffixes : "${var.region}${s}" ]
+  # AZ suffix와 region을 합쳐서 ["uw-1a","ew-1c"] 생성
+  azs_full = [ for s in var.az_suffixes : "${var.region_code}${s}" ]
 
   common_tags = {
     Environment = var.env
@@ -11,7 +11,6 @@ locals {
     Project     = "fot"
   }
 }
-
 
 # ─────────────────────────────
 # 1. VPC
@@ -22,7 +21,9 @@ module "vpc" {
   env                    = var.env
   name_suffix            = "main"
   cidr                   = var.vpc_cidr
+  az                     = var.az_suffixes
   azs                    = local.azs_full
+  region_code            = var.region_code
   
   private_subnets        = var.private_subnets
   public_subnets         = var.public_subnets
@@ -38,23 +39,23 @@ module "vpc" {
 # ─────────────────────────────
 # 2. EKS
 # ─────────────────────────────
-module "eks" {
-  source = "./modules/eks"
+# module "eks" {
+#   source = "./modules/eks"
 
-  env                 = var.env
-  cluster_name        = "eks-${local.common_tags.Project}-${var.env}-${var.cluster_name_suffix}" # eks-fot-dev-uw2
-  cluster_version     = var.cluster_version
+#   env                 = var.env
+#   cluster_name        = "eks-${local.common_tags.Project}-${var.env}-${var.cluster_name_suffix}" # eks-fot-dev-uw2
+#   cluster_version     = var.cluster_version
 
-  vpc_id              = module.vpc.vpc_id
-  private_subnet_ids  = module.vpc.private_subnet_ids
+#   vpc_id              = module.vpc.vpc_id
+#   private_subnet_ids  = module.vpc.private_subnet_ids
 
-  mng_instance_types  = var.mng_instance_types
-  mng_min_size        = var.mng_min_size
-  mng_desired_size    = var.mng_desired_size
-  mng_max_size        = var.mng_max_size
+#   mng_instance_types  = var.mng_instance_types
+#   mng_min_size        = var.mng_min_size
+#   mng_desired_size    = var.mng_desired_size
+#   mng_max_size        = var.mng_max_size
 
-  tags = local.common_tags
-}
+#   tags = local.common_tags
+# }
 
 
 # ─────────────────────────────
