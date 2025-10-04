@@ -19,15 +19,7 @@ module "vpc" {
 }
 
 # VPC 생성
-resource "aws_vpc" "this" {
-  cidr_block            = var.cidr
-  enable_dns_support    = true
-  enable_dns_hostnames  = true
 
-  tags = merge(var.tags, {
-    Name = "vpc-${tags.Project}-${local.name}"
-  })
-}
 
 # Public Subnet 생성
 resource "aws_subnet" "public" {

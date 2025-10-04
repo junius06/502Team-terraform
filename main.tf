@@ -2,14 +2,8 @@
 # 0. LOCAL
 # ─────────────────────────────
 locals {
-  # AZ suffix와 region을 합쳐서 ["uw-1a","ew-1c"] 생성
-  azs_full = [ for s in var.az_suffixes : "${var.region_code}${s}" ]
-
-  common_tags = {
-    Environment = var.env
-    Region      = var.region
-    Project     = "fot"
-  }
+  project   = "fot"
+  azs_full  = [ for s in var.az_suffixes : "${var.region_code}${s}" ]
 }
 
 # ─────────────────────────────
@@ -21,9 +15,10 @@ module "vpc" {
   env                    = var.env
   name_suffix            = "main"
   cidr                   = var.vpc_cidr
-  az                     = var.az_suffixes
-  azs                    = local.azs_full
-  region_code            = var.region_code
+
+  region_code            = var.region_code    # uw-2, ew-2
+  az                     = var.az_suffixes    # a, c
+  azs                    = local.azs_full     # uw-2a, uw-2c, ew-2a, ew-2c
   
   private_subnets        = var.private_subnets
   public_subnets         = var.public_subnets
@@ -32,7 +27,8 @@ module "vpc" {
   single_nat_gateway     = var.single_nat_gateway
   one_nat_gateway_per_az = var.one_nat_gateway_per_az
 
-  tags = local.common_tags
+  # tags = local.common_tags
+  Project                = local.project
 }
 
 

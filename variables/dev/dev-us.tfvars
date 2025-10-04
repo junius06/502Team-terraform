@@ -1,6 +1,6 @@
 env         = "dev"
 region      = "us-west-2"
-region_code = "uw"
+region_code = "uw-2"
 
 # --- VPC ---
 vpc_cidr        = "192.168.0.0/24"

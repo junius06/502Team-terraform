@@ -1,7 +1,7 @@
 # architect  
 - 테라폼으로 생성되는 아키텍처 구성도 그려넣기.
 
-## 명령어
+## ⚓ 명령어
 REGION_CHOICE값이 없으면 에러 발생  
 
 ### 모듈 생성 수동방법
@@ -28,10 +28,14 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```
 502Team-terraform/
 ├── modules/
-│   ├── iam/ 
-│   │   └── {main.tf, variables.tf, outputs.tf}
 │   ├── vpc/
-│   │   └── {main.tf, variables.tf, outputs.tf}
+│   │   ├── vpc.tf
+│   │   ├── subnet.tf
+│   │   ├── nat.tf
+│   │   ├── igw.tf
+│   │   ├── rtb.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
 │   ├── eks/
 │   │   └── {main.tf, variables.tf, outputs.tf}
 │   ├── sg/
@@ -58,31 +62,31 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 - `variables/`: 각 환경(dev, stg, prd)별 변수 분리.
 <br>
 
-## Naming Rules
-**[aws-serivce]-[project]-[env]-[service-name]-[regionCode]-[zone]**  
+## 📑 Naming Rules
+**[aws-serivce]-[project]-[env]-[regionCode]-[zone]**  
 
-| aws-services       | naming rule                                                         |
-| ------------------ | ------------------------------------------------------------------- |
-| `vpc`              | `VPC-[PROJECT]-[ENV]-[REGION-CODE]`                                 |
-| `subnet`           | `PUBLIC-SUBNET-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
-| `route table`      | `RTB-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
-| `internet gateway` | `IGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
-| `nat gateways`     | `NGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
-| `elastic IPs`      | `EIP-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `                 | 
-| `security groups`  | `SG-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `                  | 
-| `ec2`              | `EC2-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]`           |
-| `ami`              | `yyyymmdd-AMI-[EC2-NAME]`                                           |
-| `ebs volumes`      | `EBS-[EC2-NAME]`                                                    |
-| `snapshots`        | `SNAP-[EC2-NAME] `                                                  | 
-| `key-pairs`        | `KEY-[EC2-SERVICE-NAME]`                                            |
-| `load balancers`   | `[ALB/NLB]-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]`     |
-| `ecr`              | `ECR-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
-| `eks`              | `EKS-[PROJECT]-[ENV]-[CLUSTER-NAME]-[REGION-CODE]`                  |
-| `s3`               | `S3-[PROJECT]-[ENV]-[BUCKET-NAME]-[REGION-CODE]`                    |
-| `rds`              | `RDS-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
+| aws-services       | naming rule                                          |
+| ------------------ | ---------------------------------------------------- |
+| `vpc`              | `VPC-[PROJECT]-[ENV]-[REGION-CODE]`                  |
+| `subnet`           | `PUBLIC-SUBNET-[PROJECT]-[ENV]-[REGION-CODE]-[ZONE]`<br>`PRIVATE-SUBNET-[PROJECT]-[ENV]-[REGION-CODE]-[ZONE]`|
+| `route table`      | `RTB-PUBLIC-[PROJECT]-[ENV]-[REGION-CODE]`<br>`RTB-PRIVATE-[PROJECT]-[ENV]-[REGION-CODE]`|
+| `internet gateway` | `IGW-[PROJECT]-[ENV]-[REGION-CODE]`                  |
+| `nat gateways`     | `NGW-[PROJECT]-[ENV]-[REGION-CODE]`                  |
+| `elastic IPs`      | `EIP-[PROJECT]-[ENV]-[REGION-CODE] `                 | 
+| `security groups`  | `SG-[PROJECT]-[ENV]-[REGION-CODE] `                  | 
+| `ec2`              | `EC2-[PROJECT]-[ENV]-[REGION-CODE]-[ZONE]`           |
+| `ami`              | `yyyymmdd-AMI-[EC2-NAME]`                            |
+| `ebs volumes`      | `EBS-[EC2-NAME]`                                     |
+| `snapshots`        | `SNAP-[EC2-NAME] `                                   | 
+| `key-pairs`        | `KEY-[EC2-SERVICE-NAME]`                             |
+| `load balancers`   | `[ALB/NLB]-[PROJECT]-[ENV]-[REGION-CODE]-[ZONE]`     |
+| `ecr`              | `ECR-[PROJECT]-[ENV]-[REGION-CODE]`                  |
+| `eks`              | `EKS-[PROJECT]-[ENV]-[CLUSTER-NAME]-[REGION-CODE]`   |
+| `s3`               | `S3-[PROJECT]-[ENV]-[BUCKET-NAME]-[REGION-CODE]`     |
+| `rds`              | `RDS-[PROJECT]-[ENV]-[REGION-CODE]`                  |
 <br>
 
-## NETWORK
+## 🌐 NETWORK
 ### CIDR  
 | RESOURCE           | RESOURCE NAME                                                            | CIDR                            |
 | ------------------ | -------------------------------------------------------------------------| ------------------------------- |
