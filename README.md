@@ -61,25 +61,25 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ## Naming Rules
 **[aws-serivce]-[project]-[env]-[service-name]-[regionCode]-[zone]**  
 
-| aws-services       | naming rule  |
-| ------------------ | ------------ |
-| `vpc`              | `VPC-[PROJECT]-[ENV]-[REGION-CODE]` |
+| aws-services       | naming rule                                                         |
+| ------------------ | ------------------------------------------------------------------- |
+| `vpc`              | `VPC-[PROJECT]-[ENV]-[REGION-CODE]`                                 |
 | `subnet`           | `PUBLIC-SUBNET-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
-| `route table`      | `RTB-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
-| `internet gateway` | `IGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
-| `nat gateways`     | `NGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
-| `elastic IPs`      | `EIP-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `| 
-| `security groups`  | `SG-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `| 
-| `ec2`              | `EC2-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
-| `ami`              | `yyyymmdd-AMI-[EC2-NAME]` |
-| `ebs volumes`      | `EBS-[EC2-NAME]` |
-| `snapshots`        | `SNAP-[EC2-NAME] `| 
-| `key-pairs`        | `KEY-[EC2-SERVICE-NAME]` |
-| `load balancers`   | `[ALB/NLB]-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]` |
-| `ecr`              | `ECR-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
-| `eks`              | `EKS-[PROJECT]-[ENV]-[CLUSTER-NAME]-[REGION-CODE]` |
-| `s3`               | `S3-[PROJECT]-[ENV]-[BUCKET-NAME]-[REGION-CODE]` |
-| `rds`              | `RDS-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]` |
+| `route table`      | `RTB-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
+| `internet gateway` | `IGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
+| `nat gateways`     | `NGW-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
+| `elastic IPs`      | `EIP-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `                 | 
+| `security groups`  | `SG-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE] `                  | 
+| `ec2`              | `EC2-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]`           |
+| `ami`              | `yyyymmdd-AMI-[EC2-NAME]`                                           |
+| `ebs volumes`      | `EBS-[EC2-NAME]`                                                    |
+| `snapshots`        | `SNAP-[EC2-NAME] `                                                  | 
+| `key-pairs`        | `KEY-[EC2-SERVICE-NAME]`                                            |
+| `load balancers`   | `[ALB/NLB]-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]-[ZONE]`     |
+| `ecr`              | `ECR-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
+| `eks`              | `EKS-[PROJECT]-[ENV]-[CLUSTER-NAME]-[REGION-CODE]`                  |
+| `s3`               | `S3-[PROJECT]-[ENV]-[BUCKET-NAME]-[REGION-CODE]`                    |
+| `rds`              | `RDS-[PROJECT]-[ENV]-[SERVICE-NAME]-[REGION-CODE]`                  |
 <br>
 
 ## NETWORK
@@ -95,11 +95,7 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```mermaid
 graph LR; 
     BASTION-->RDS;
-```
-```mermaid
-graph LR;
-    EKS --> RDS;
-    RDS --> EKS;
+    BASTION-->EKS;
 ```
 <!-- TD(Top Down)    : 세로 방향으로 다이어그램 생성 -->
 <!-- LR(Left Right)  : 가로 방향으로 다이어그램 생성 -->
