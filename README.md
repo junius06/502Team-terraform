@@ -55,7 +55,7 @@ terraform destroy -var-file=variables/{env}/{env}-{region_code}.tfvars
 ```
 
 - `modules/`: 모든 환경 공통적으로 재사용 가능한 순수 모듈(외부 의존 최소화).   
-- `variables/`: 
+- `variables/`: 각 환경(dev, stg, prd)별 변수 분리.
 <br>
 
 ## Naming Rules
