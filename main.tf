@@ -2,8 +2,11 @@
 # 0. LOCAL
 # ─────────────────────────────
 locals {
+  common_tags   = {
+    Project     = "fot"
+  }
   project   = "fot"
-  azs_full  = [ for s in var.az_suffixes : "${var.region_code}${s}" ]
+  # azs_full  = [ for s in var.az_suffixes : "${var.region_code}${s}" ]
 }
 
 # ─────────────────────────────
@@ -18,6 +21,7 @@ module "vpc" {
 
   region_code            = var.region_code    # uw-2, ew-2
   az                     = var.az_suffixes    # a, c
+
   azs                    = local.azs_full     # uw-2a, uw-2c, ew-2a, ew-2c
   
   private_subnets        = var.private_subnets

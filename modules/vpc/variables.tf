@@ -15,6 +15,7 @@ variable "azs"                    { type = list(string) }
 # CIDR 목록 개수는 azs 길이와 같아야 함
 variable "private_subnets"        { type = list(string) }
 variable "public_subnets"         { type = list(string) }
+variable "nat_private_ip"         { type = string }
 
 # 선택 값들
 variable "enable_nat_gateway"     { type = bool }

@@ -1,7 +1,7 @@
-resource "aws_internet_gateway" "this" {
-  vpc_id = aws_vpc.this.id
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
 
-  tags = merge(local.common_tags, {
+  tags = merge(var.tags, {
     Name = "igw-${var.Project}-${var.env}-${var.region_code}"
   })
 }
